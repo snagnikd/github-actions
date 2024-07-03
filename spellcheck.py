@@ -1,14 +1,19 @@
 import os
 import sys
 import subprocess
-from pyspelling import Dictionary
+from spellchecker import SpellChecker
 
 def spell_check(text):
-    # Load dictionary (adjust the path as needed)
-    dictionary = Dictionary()
+    spell = SpellChecker()
 
-    # Check spelling
-    return dictionary.check(text)
+    # Split the text into words
+    words = text.split()
+
+    # Find misspelled words
+    misspelled = spell.unknown(words)
+
+    # Return True if no misspelled words found, False otherwise
+    return len(misspelled) == 0
 
 def main():
     try:
