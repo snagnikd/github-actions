@@ -19,7 +19,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install pyaspell
+          pip install pyspelling
 
       - name: Spell check new/changed lines
         run: python spellcheck.py ${{ github.event.pull_request.head.sha }}

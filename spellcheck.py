@@ -1,17 +1,14 @@
 import os
 import sys
 import subprocess
-from pyaspell import Aspell
+from pyspelling import Dictionary
 
 def spell_check(text):
-    # Initialize Aspell
-    aspell = Aspell()
-
-    # Set the language (adjust as needed)
-    aspell.set_option('lang', 'en')
+    # Load dictionary (adjust the path as needed)
+    dictionary = Dictionary()
 
     # Check spelling
-    return aspell.check(text)
+    return dictionary.check(text)
 
 def main():
     try:
