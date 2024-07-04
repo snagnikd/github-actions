@@ -1,27 +1,38 @@
-name: Spell Check
+name: Extract Changed Lines
+
 on:
   pull_request:
-    paths:
-      - '**/*'  # Trigger on any file change
+    types: [opened, edited, synchronize]
 
 jobs:
-  spell-check:
+  extract-changed-lines:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.10'
+    - name: Install Python (if necessary)
+      if: runner.os == 'Windows' || runner.os == 'macOS'
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
 
-      - name: Install dependencies
-        run: |
-          pip install pyspelling
+    - name: Install dependencies
+      run: pip install pyyaml  # Install PyYAML for YAML processing
 
-      - name: Spell check new/changed lines
-        run: python spellcheck.py ${{ github.event.pull_request.head.sha }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Extract changed lines
+      id: extract-lines
+      run: |
+        changed_files=$(git diff --name-only HEAD^ HEAD)  # Get list of changed files
+        for file in $changed_files; do
+          git diff -U0 HEAD^ HEAD "$file" | grep -E '^\+' | sed 's/^\+//' | while read -r line; do
+            line_number=$(echo "$line" | grep -E '^\+\+\+|^\-\-\-' | cut -d ':' -f 3)
+            if [[ ! -z "$line_number" ]]; then
+              echo "${file}:${line_number}:${line}"
+            fi
+          done
+        done > changed_lines.txt
+
+    - name: Output changed lines
+      run: cat changed_lines.txt
