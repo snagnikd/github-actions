@@ -28,4 +28,10 @@ for file_path, line_numbers in output_dict.items():
                 text_strings.append(text_string)
 result_text = "\n".join(text_strings)
 
-print(result_text)
+prompt = f'''Out of the following lines of code provided, look for any text present, check the text for correct grammar and spellings. Remove the lines that are correct.
+Report the text as it is provided after removing the lines that have correct grammar and spellings. Leave the wrong ones there. Only return the text. Nothing else
+
+Here is the text
+{result_text}'''
+
+print(prompt)
