@@ -44,7 +44,7 @@ def main():
                 print(f'{error["file"]}:{error["line_number"]} - {error["line"]}')
             sys.exit(1)  # Exit with non-zero code to indicate failure
         else:
-            print('No spell check errors found.')
+            print('No spell check errors found. Something to add on')
 
     except Exception as e:
         print(f'Error during spell check: {e}')
