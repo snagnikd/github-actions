@@ -1,1 +1,0 @@
-{spellcheck.py: [47], src/get_num_square.py: [13, 14], stuff.txt: [3]}

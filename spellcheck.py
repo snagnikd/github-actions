@@ -22,7 +22,7 @@ def main():
                 diff_cmd = f"git diff -U0 HEAD $(git merge-base HEAD {commit_sha}) -- \"{file}\""
                 diff_output = subprocess.check_output(diff_cmd, shell=True, text=True)
                 diff_lines = diff_output.splitlines()
-
+                diff_lines = diff_lines.strip()
                 line_number = 0
                 for line in diff_lines:
                     line_number += 1
