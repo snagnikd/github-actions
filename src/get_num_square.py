@@ -10,5 +10,7 @@ if num:
 else:
     num = 1
 
+print('How does change here look')
+
 # to set output, print to shell in following syntax
 print(f"::set-output name=num_squared::{num ** 2}")
