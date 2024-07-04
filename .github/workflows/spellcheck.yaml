@@ -8,5 +8,7 @@ jobs:
       - name: Find changed lines
         id: changed_lines
         uses: hestonhoffman/changed-lines@v1
-      - name: Print changed lines
-        run: echo ${{ steps.changed_lines.outputs.changed_lines }}
+      - name: Save changed lines to file
+        run: echo '${{ steps.changed_lines.outputs.changed_lines }}' > changed_lines.txt
+      - name: Run Python script to convert lines
+        run: python convert_lines.py
